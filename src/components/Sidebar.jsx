@@ -1,32 +1,21 @@
-import React from 'react'
-import {FaHome} from 'react-icons/fa'
+import {FaBullhorn, FaHome, FaPen, FaTimes} from 'react-icons/fa'
+import { FaUser } from 'react-icons/fa6'
+import { NavItems } from './NavItems'
 
 export const Sidebar = ({sidebarToggle}) => {
+    // recoger la data
   return (
     <div className={`${sidebarToggle ? "hidden":"block"} w-64 bg-gray-800 fixed h-full px-4 py-2`}>
         <div className='my-2 mb-4'>
-            <h1 className='text-2x text-white font-bold'>Admin</h1>
+            <h1 className='text-2 text-white font-bold'>Usuario</h1>
         </div>
         <hr/>
-        <ul className='mt-3 text-white font-bold'>
-            <li className='mb-2 rounded hover:shadow hover:bg-blue-500 py-2'>
-                <a href='' className='px-3'>
-                    <FaHome className ='inline-block w-6 h-6 mr-2 mt-2'></FaHome>
-                    Home
-                </a>
-            </li>
-            <li className='mb-2 rounded hover:shadow hover:bg-blue-500 py-2'>
-                <a href='' className='px-3'>
-                    <FaHome className ='inline-block w-6 h-6 mr-2 mt-2'></FaHome>
-                    Lista usuarios
-                </a>
-            </li>
-            <li className='mb-2 rounded hover:shadow hover:bg-blue-500 py-2'>
-                <a href='' className='px-3'>
-                    <FaHome className ='inline-block w-6 h-6 mr-2 mt-2'></FaHome>
-                    Incidencias
-                </a>
-            </li>
+        <ul className='mt-5 text-white font-bold'>
+          <NavItems url ='/usuarios' icons={<FaHome className ='inline-block w-5 h-5'/>} titulo ='Home'/> 
+          <NavItems url ='/usuarios/misdatos' icons={<FaUser className ='inline-block w-5 h-5'/>} titulo ='Mis Datos'/> 
+          <NavItems url ='/usuarios/misdatos/actualizar' icons={<FaPen  className ='inline-block w-5 h-5'/>} titulo ='Actualizar Datos'/>
+          <NavItems url ='/usuarios/borrar' icons={<FaTimes  className ='inline-block w-5 h-5'/>} titulo ='Eliminar Cuenta'/>  
+          <NavItems url ='/incidencias' icons={<FaBullhorn className ='inline-block w-5 h-5'/>} titulo ='Incidencias'/>           
         </ul>
     </div>
   )

@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import { Navbarra } from './Navbarra'
-import { Sidebar } from './Sidebar'
-import { Outlet } from 'react-router-dom'
+import { SidebarAdmin } from './SidebarAdmin'
 
-export const Dashboard = ({children}) => {
+export const DashboardAdmin = ({children}) => {
 const [sidebarToggle, setSidebarToggle] = useState(false)
   return (
     <>    
         <div className='w-full block h-full'>
           <Navbarra  sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle}/>
-          <Sidebar sidebarToggle={sidebarToggle}/>           
+          <SidebarAdmin sidebarToggle={sidebarToggle}/>           
         </div>
         <div className='w-full flex flex-col '>
               {children}

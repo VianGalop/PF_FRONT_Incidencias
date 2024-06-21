@@ -1,7 +1,20 @@
-import React from 'react'
+import { useContext } from 'react'
 import { FaBars, FaBell, FaSearch, FaUserCircle } from 'react-icons/fa'
+import Login from '../Pages/Login'
+import AuthContext from '../context/authContext.jsx'
+import { useNavigate } from 'react-router-dom'
 
 export const Navbarra = ({sidebarToggle, setSidebarToggle}) => {
+
+    const logout = () => {
+        const {setAuth} = useContext(AuthContext)
+        const navigate = useNavigate();
+        // if used in more components, this should be in context 
+        // axios to /logout endpoint 
+        setAuth({});
+        localStorage.removeItem('tk_Auth')
+        navigate('/login');
+    }
   return (
    <nav className='bg-gray-800 px-4 py-3 flex justify-between'>
         <div className='flex items-center text-xl'>
@@ -21,8 +34,7 @@ export const Navbarra = ({sidebarToggle, setSidebarToggle}) => {
                     <FaUserCircle className='w-6 h-6 mt-1'/>
                     <div className='border-2 z-10 hidden absolute bg-white rounded-lg shadow w-32 group-focus:block top-full right-0'>
                         <ul className='py-2 text-sm text-gray-950'>
-                            <li><a href=''>Profile</a></li>
-                            <li><a href=''>Logout</a></li>
+                        <button onClick={logout}>LogOut</button>
                         </ul>
                     </div>
                 </button>

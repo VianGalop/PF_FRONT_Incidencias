@@ -9,19 +9,32 @@ import pass from '../assets/pass.svg'
 import { Link, useNavigate} from 'react-router-dom'
 /* import { UserContext, } from '../context/userContext.jsx' */
 import { sendLogin } from '../Api/axios.js'
+import AuthContext from '../context/authContext.jsx'
 
 const Login = () => {
-  const [message, SetMessage] = useState('')
+  const {setAuth} = useContext(AuthContext)
+  const [message, setMessage] = useState('')
  /*  const { setIsAuthenticated } = useContext(UserContext) */
   const navigate = useNavigate()
   const loginMutation = useMutation({
     mutationFn:sendLogin,
-    onSuccess: () => {
- /*   setIsAuthenticated(true), */
-      navigate('/inicio')
+    onSuccess: (res) => {
+      if(res.data){        
+        const tk = res.data.datosRes.tk
+        const rol = res.data.datosRes.data
+        localStorage.setItem('tk_Auth', tk)        
+         if(rol === 1){ //liga de admin
+            navigate('/admin')
+          }
+          if(rol  === 2){
+            navigate('/usuarios') //liga de usuario
+          }
+          setAuth({tk, rol})
+        }
+        setMessage('')
     },
     onError: () => {
-      alert('Error de registro')
+      setMessage('No autorizado, verifica tus datos')
     }
     });
 
@@ -43,15 +56,15 @@ const Login = () => {
               <h3 className='text-[18px] font-bold font-sans mb-4 mt-4 text-[#333333]'>Bienvenidos residentes</h3>
               <p className='text-sm mt-2 mb-2 font-sans text-[#333333]'>Inicia sesion y reportar las incidencias que encuentres en la residencia.</p><br></br>
             </div>
-            <p>{message}</p>
+            <p className='text-red-600 text-center text-[15px]'>{message? message: ''}</p>
               <form  className='m-2' onSubmit={handleSubmit}>
                 <div className=' flex flex-row border-2 h-10 rounded-md mb-4 mt-4'>
                   <img className='w-4 ml-2 mr-2' src={gmail}/>              
-                  <input type='email' name='email' placeholder="Email" className='w-full focus:outline-none'/>
+                  <input type='email' name='email' placeholder="Email" className='w-full focus:outline-none' required/>
                 </div>
                 <div className=' flex flex-row border-2 h-10 rounded-md'>
                   <img className='w-4 ml-2 mr-2' src={pass}/>              
-                  <input type='password' name='password' placeholder="Password" className='w-full focus:outline-none'/>
+                  <input type='password' name='password' placeholder="Password" className='w-full focus:outline-none' required/>
                 </div>
                 <button type="submit" className='mb-4 mt-4 block w-full rounded-md bg-blue-600 px-6 pb-2 pt-2.5 text-sm font-sans leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out'>Inicia Sesion Ahora</button>
               </form>
