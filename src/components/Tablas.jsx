@@ -14,7 +14,7 @@ export const Tablas = ({message, data}) => {
     },[])
   return (
     <div className="container mx-auto p-4">
-        <h1 className="text-4xl font-bold mb-4 text-center">Mis Incidencias</h1>
+        <h1 className="text-4xl font-bold mb-4 text-center">Incidencias</h1>
         {message ?
             <p className='text-red-600 mx-auto text-center mt-10 text-[30px]'>No hay informacion</p>:
         <table className="table-auto w-full">

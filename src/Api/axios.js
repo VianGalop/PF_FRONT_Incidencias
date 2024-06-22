@@ -77,6 +77,19 @@ export const getUsuarios = async () => {
   
 };
 
+export const getUnUsuario = async () => {
+  try {
+    const token = localStorage.getItem('tk_Auth') //recupera token
+    const res = await axiosInstance.get('/usuarios/admin/usuario',{ headers:{ Authorization:`Bearer ${token}`}
+    });   
+  return res.data
+  } catch (error) {
+    console.error('Error al enviar datosen getusuarios:', error); // Manejo de errores
+    return error.data;
+  }
+  
+};
+
 
 export const getIncidencias = async () => {
   try {
@@ -101,7 +114,7 @@ export const sendIncidencia = async (sendData) => {
   }  
 };
 
-export const updateInci = async (sendData) => {
+export const UpdatedIncidencia = async (sendData) => {
   try{
     const token = localStorage.getItem('tk_Auth') //recupera token
     const res = await axiosInstance.patch('/situacion/actualizar/:idInci', sendData, { headers:{ Authorization:`Bearer ${token}`} } ); 
@@ -143,3 +156,27 @@ export const getTipoIncidencias = async () => {
   }
  
 };
+
+export const NewIncidencia = async (sendData) => {
+  try{
+    console.log('NewIncidencia', sendData);
+    const res = await axiosInstance.post('/situacion/crear', sendData); 
+    return res.data
+  }catch(error){
+    console.error('Error al enviar datos:', error); // Manejo de errores
+    throw error;
+  }  
+};
+
+export const todosTiposInc = async() =>{
+  try {
+    const tokInc = localStorage.getItem('tk_Auth') 
+    const res = await axiosInstance.get('/tipoIncidencias/visualizar',{headers:{Authorization:`Bearer ${tokInc}`}}); 
+    console.log(res.data);
+    return res.data
+  } catch (error) {
+    console.error('Error al enviar datos:', error); // Manejo de errores
+  }
+  
+}
+
